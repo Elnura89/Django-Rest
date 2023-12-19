@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="students-list">
+
+    </div>
+
+    <script>
+        fetch('http://127.0.0.1:8000/students/' )
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            var studentsList = document.getElementById('students-list');
+            // data.forEach(student => {
+            //     var listItem = document.createElement('li');
+            //     listItem.textContent = student.name + ' - ' + student.age;
+            //     studentsList.appendChild(listItem);
+            // });
+            console.log(data) 
+ 
+           for(let i=0;i<data.count;i++){ 
+                var listItem = document.createElement('li'); 
+                listItem.textContent = data.results[i].name + ' - ' + data.results[i].age; 
+                studentsList.appendChild(listItem); 
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching students:', error);
+        })
+    </script>
+</body>
+</html>
